@@ -5,8 +5,8 @@
 
 #include <arduino.h> //not sure if I need this one or if it is there by default
 
-int eyes = 2; //dio for eyes
-int headlight1 = 3; //dio for headlight
+int eyes = 3; //dio for eyes
+int headlight1 = 2; //dio for headlight
 int music = 4; //dio for music
 int sfx1 = 5; //dio sound fx 1
 int sfx2 = 6; //dio sound fx 2
@@ -16,6 +16,7 @@ int detect2 = 8; //dio for detect sensor 2
 int time1;
 int time2;
 int time3;
+int a=0;
 
 void setup() 
 {
@@ -45,7 +46,7 @@ void loop()
   else 
   {
     digitalWrite(music,LOW); //Play music if no motion detected
-    digitalWrite(eyes,LOW); //just to make sure they are off
+    analogWrite(eyes,0); //just to make sure they are off
     digitalWrite(headlight1,LOW); //just to make sure they are off
     
   }
@@ -60,14 +61,24 @@ int i=0;
   digitalWrite(sfx1,LOW);
   digitalWrite(headlight1,HIGH);
   
-  for (i=0;i<=15;i++)
+  for (int a=0; a<=255;a++)               //loop from 0 to 255
   {
-    digitalWrite(eyes,HIGH);
-    delay(150);
-    digitalWrite(eyes,LOW);
-    delay(100);
+    analogWrite(eyes, a);
+        delay(8);                             //wait for 8 milliseconds            
   }
-	digitalWrite(eyes,LOW); //reset eyes
+    for (int a=255; a>=0;a--)             //loop from 255 down to 0
+  {
+    analogWrite(eyes, a);               // set the brightness of pin 9:
+       delay(8);                             //wait for 8 milliseconds   
+  }
+  /*for (i=0;i<=15;i++)
+  {
+    analogWrite(eyes,255);
+    delay(150);
+    analogWrite(eyes,0);
+    delay(100);
+  }*/
+	analogWrite(eyes,0); //reset eyes
   digitalWrite(headlight1,LOW); //reset headlight
   time2=millis();
   time3=(time2-time1);
