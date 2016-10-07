@@ -12,7 +12,9 @@ int sfx1 = 5; //dio sound fx 1
 int sfx2 = 6; //dio sound fx 2
 int detect1 = 7; //dio for detect sensor 1
 int detect2 = 8; //dio for detect sensor 2
-//int head = 11; //dio for head
+int head_move = 9; //dio for head
+int headdir1 = 12; //direction control
+int headdir2 = 13; //direction control
 int time1;
 int time2;
 int time3;
@@ -29,6 +31,9 @@ void setup()
   pinMode(sfx2,OUTPUT);
   pinMode(detect1,INPUT);
   pinMode(detect2,INPUT);
+  pinMode(head_move,OUTPUT);
+  pinMode(headdir1,OUTPUT);
+  pinMode(headdir2,OUTPUT);
   }
 
 void loop() 
@@ -41,13 +46,17 @@ void loop()
   else if (digitalRead(detect2)==HIGH)
   {
     digitalWrite(music,HIGH);
-		head_left();
+//		head_right();
   }
   else 
   {
     digitalWrite(music,LOW); //Play music if no motion detected
+    digitalWrite(sfx1,HIGH);
+    digitalWrite(sfx2,HIGH);
     analogWrite(eyes,0); //just to make sure they are off
     digitalWrite(headlight1,LOW); //just to make sure they are off
+    analogWrite(head_move, 0);// motor speed
+  
     
   }
 }
@@ -60,26 +69,28 @@ int i=0;
   time1=millis();
   digitalWrite(sfx1,LOW);
   digitalWrite(headlight1,HIGH);
-  
+  analogWrite(head_move, 25);// motor speed  
+  digitalWrite(headdir1,LOW);// rotate forward
+  digitalWrite(headdir2,HIGH); 
   for (int a=0; a<=255;a++)               //loop from 0 to 255
   {
     analogWrite(eyes, a);
-        delay(8);                             //wait for 8 milliseconds            
+        delay(8);                             //wait for 8 milliseconds    
+               
   }
     for (int a=255; a>=0;a--)             //loop from 255 down to 0
   {
     analogWrite(eyes, a);               // set the brightness of pin 9:
        delay(8);                             //wait for 8 milliseconds   
   }
-  /*for (i=0;i<=15;i++)
-  {
-    analogWrite(eyes,255);
-    delay(150);
-    analogWrite(eyes,0);
-    delay(100);
-  }*/
-	analogWrite(eyes,0); //reset eyes
+ 
+ 	analogWrite(eyes,0); //reset eyes
   digitalWrite(headlight1,LOW); //reset headlight
+  digitalWrite(sfx1,HIGH);
+  analogWrite(head_move, 100);// motor speed  
+  digitalWrite(headdir1,HIGH);// rotate forward
+  digitalWrite(headdir2,LOW);
+  delay(2000); //delay to reset head
   time2=millis();
   time3=(time2-time1);
   Serial.println(time3);
