@@ -46,7 +46,7 @@ void loop()
   else if (digitalRead(detect2)==HIGH)
   {
     digitalWrite(music,HIGH);
-//		head_right();
+		head_left();
   }
   else 
   {
@@ -69,9 +69,11 @@ int i=0;
   time1=millis();
   digitalWrite(sfx1,LOW);
   digitalWrite(headlight1,HIGH);
-  analogWrite(head_move, 25);// motor speed  
-  digitalWrite(headdir1,LOW);// rotate forward
-  digitalWrite(headdir2,HIGH); 
+  analogWrite(head_move, 255);// motor speed 
+  digitalWrite(headdir1,HIGH);// rotate forward
+  digitalWrite(headdir2,LOW); 
+  delay(200);
+  analogWrite(head_move,0);
   for (int a=0; a<=255;a++)               //loop from 0 to 255
   {
     analogWrite(eyes, a);
@@ -87,10 +89,10 @@ int i=0;
  	analogWrite(eyes,0); //reset eyes
   digitalWrite(headlight1,LOW); //reset headlight
   digitalWrite(sfx1,HIGH);
-  analogWrite(head_move, 100);// motor speed  
-  digitalWrite(headdir1,HIGH);// rotate forward
-  digitalWrite(headdir2,LOW);
-  delay(2000); //delay to reset head
+  analogWrite(head_move, 255);// motor speed  
+  digitalWrite(headdir1,LOW);// rotate forward
+  digitalWrite(headdir2,HIGH);
+  delay(200); //delay to reset head
   time2=millis();
   time3=(time2-time1);
   Serial.println(time3);
