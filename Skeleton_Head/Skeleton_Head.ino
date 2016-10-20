@@ -7,7 +7,7 @@
 #include <Stepper.h> //stepper motor library
 
 # define STEPS_PER_MOTOR_REV 32
-# define STEPS_PER_OUTPUT_REV 32 * 64 //internal shaft * gear ratio = 2048
+# define STEPS_PER_OUTPUT_REV 32 * 64 //internal shaft * gear ratio = 2048 only applies to motor that came with the kit
 
 Stepper small_stepper(STEPS_PER_MOTOR_REV, 10,12,11,13);
 
@@ -17,8 +17,8 @@ int photo_detect = 7; //dio for detect sensor 1
 void setup() 
 {
   // Setup ports
-  Serial.begin(9600); //remove this later?
-  pinMode(photo_detect,INPUT);
+ // Serial.begin(9600); //remove this later?
+  pinMode(photo_detect,INPUT_PULLUP);
   }
 
 void loop() 

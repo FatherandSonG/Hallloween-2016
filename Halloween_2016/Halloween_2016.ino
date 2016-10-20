@@ -6,16 +6,19 @@
 #include <arduino.h> //not sure if I need this one or if it is there by default
 
 int eyes = 3; //dio for eyes
-int headlight1 = 2; //dio for headlight
-int music = 4; //dio for music
-int sfx1 = 5; //dio sound fx 1
-int sfx2 = 6; //dio sound fx 2
+int headlight1 = 9; //dio for headlight
+int coffin_red = 5;
+int coffin_white = 6;
+int music = 13; //dio for music
+int sfx1 = 12; //dio sound fx 1
+int sfx2 = 11; //dio sound fx 2
 int detect1 = 7; //dio for detect sensor 1
 int detect2 = 8; //dio for detect sensor 2
 int time1;
 int time2;
 int time3;
 int a=0;
+int coffin=0;
 
 void setup() 
 {
@@ -26,19 +29,20 @@ void setup()
   pinMode(music,OUTPUT);
   pinMode(sfx1,OUTPUT);
   pinMode(sfx2,OUTPUT);
-  pinMode(detect1,INPUT);
-  pinMode(detect2,INPUT);
-
-  }
+  pinMode(detect1,INPUT_PULLUP); //enable internal pullup detect is on active low
+  pinMode(detect2,INPUT_PULLUP);
+}
 
 void loop() 
 {
- if(digitalRead(detect1) == HIGH)
+ coffin=random(0,255);
+ 
+ if(digitalRead(detect1) == LOW)
   {
   	digitalWrite(music,HIGH); // turn off music
-    head_light();  //call head movemnent and SFX fucntion
+    head_light();  //call head light and SFX fucntion
   }
-  else if (digitalRead(detect2)==HIGH)
+  else if (digitalRead(detect2)==LOW)
   {
     digitalWrite(music,HIGH);
 		head_light();
@@ -50,6 +54,9 @@ void loop()
     digitalWrite(sfx2,HIGH);
     analogWrite(eyes,0); //just to make sure they are off
     digitalWrite(headlight1,LOW); //just to make sure they are off
+    analogWrite(coffin_red,coffin);
+    analogWrite(coffin_white,coffin);
+    //analogWrite(headlight1,100);  
   }
 }
 
