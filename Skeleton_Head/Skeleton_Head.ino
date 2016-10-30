@@ -1,4 +1,4 @@
-/*
+ /*
  * Skeleton Head Movement and sound fxs
  * Halloween 2016
  * Code was written for Arduino UNO, Adafruit Sound FX Board 16MB 
@@ -72,14 +72,14 @@ void head_move() //head move function
   digitalWrite(sfx1,HIGH); //turn off sfx trigger
   break;
   case 2:
-  digitalWrite(sfx2,LOW);
+  digitalWrite(sfx1,LOW);
   delay(250);
- digitalWrite(sfx2,HIGH);
+ digitalWrite(sfx1,HIGH);
   break;
   case 3:
-  digitalWrite(sfx3,LOW);
+  digitalWrite(sfx1,LOW);
   delay(250);
-  digitalWrite(sfx3,HIGH);
+  digitalWrite(sfx1,HIGH);
   break;
  }
  
@@ -101,6 +101,7 @@ void ping() //function to test distance
   delayMicroseconds(8);
   digitalWrite(pingPin, LOW); //set ping pin low
   duration=pulseIn(echoPin, HIGH); //read echo pulse
+  Serial.println(duration);
   if ((duration) < 5000) //if pulse duration is less than 5000 move head
   {
     head= 1;
